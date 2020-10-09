@@ -1,0 +1,16 @@
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.exe
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.deps.json
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.runtimeconfig.json
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.runtimeconfig.dev.json
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.dll
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Nfce.pdb
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\HtmlAgilityPack.dll
+C:\Legnaro\Nfce\Nfce\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.csprojAssemblyReference.cache
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.AssemblyInfoInputs.cache
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.AssemblyInfo.cs
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.csproj.CoreCompileInputs.cache
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.csproj.CopyComplete
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.dll
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.pdb
+C:\Legnaro\Nfce\Nfce\obj\Debug\netcoreapp3.1\Nfce.genruntimeconfig.cache

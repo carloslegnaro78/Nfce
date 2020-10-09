@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "T/rWayKq2ynHC8iVWPqufl85t7/YpVGnbGNw27dh0Y3MYUfcnm/lQUINfySxR8Ju5qMhGvbOIxpbBci0Qf3Gtw==",
+  "success": true,
+  "projectFilePath": "C:\\Legnaro\\Nfce\\Nfce\\Nfce.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\carlos.legnaro\\.nuget\\packages\\htmlagilitypack\\1.11.24\\htmlagilitypack.1.11.24.nupkg.sha512",
+    "C:\\Users\\carlos.legnaro\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
