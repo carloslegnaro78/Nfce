@@ -93,7 +93,7 @@ namespace Nfce
                             }
 
                             if (lines[6] != null)
-                                item[2] = lines[6].Replace("(", "");
+                                item[2] = lines[6].Replace("(", "").Replace("ó","o");
 
                             if (lines[8] != null)
                                 item[3] = lines[8];
@@ -118,9 +118,7 @@ namespace Nfce
                         count++;
                     }
                 }
-            }
-
-            Console.Read();
+            }            
         }
     }
 }
