@@ -4,13 +4,55 @@ using System.IO;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Nfce
 {
     class Program
     {
+        public class Estabelecimento
+        {
+            public string Nome { get; set; }
+            public string Logradouro { get; set; }
+            public string Bairro { get; set; }
+            public string Cidade { get; set; }
+            public string Uf { get; set; }
+            public string Cnpj { get; set; }
+
+            public Estabelecimento(string nome, string logradouro, string bairro, string cidade, string uf, string cnpj)
+            {
+                Nome = nome;
+                Logradouro = logradouro;
+                Bairro = bairro;
+                Cidade = cidade;
+                Uf = uf;
+                Cnpj = cnpj;
+            }
+        }
+
+        public class Item
+        {
+
+            public string Cod { get; set; }
+
+            public string Descricao { get; set; }
+
+            public string Unidade { get; set; }
+
+            public string Vlunit { get; set; }
+
+            public Item(string cod, string descricao, string unidade, string vlunit)
+            {
+                this.Cod = cod;
+                this.Descricao = descricao;
+                this.Unidade = unidade;
+                this.Vlunit = vlunit;
+            }
+
+        }
+
         static void Main(string[] args)
-        {                
+        {
 
             //  Entrada: Link / Dados do QRCode, Parametro Tipo
 
@@ -24,12 +66,11 @@ namespace Nfce
 
             strQRCode = Console.ReadLine();
 
-            //  string url = "https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?p=35200961412110046651650230000122431881439089|2|1|1|9680b3ada1e70a1af2a24897c28732ea30e88a2f";
+            //string url = "https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?p=35200961412110046651650230000122431881439089|2|1|1|9680b3ada1e70a1af2a24897c28732ea30e88a2f";
 
             string url = "https://www.nfce.fazenda.sp.gov.br/NFCeConsultaPublica/Paginas/ConsultaQRCode.aspx?p=" + strQRCode;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
             request.UserAgent = "C# console client";
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -53,94 +94,44 @@ namespace Nfce
 
                 string[] lines = value.Split(new string[] { "\r\n", "\t\t\t\t\t\t\t\t" }, StringSplitOptions.None);
 
-                string[] cabecalho = new string[10];
-
                 if (countDiv == 0)
                 {
-                    cabecalho[0] = "NOME";
-                    cabecalho[1] = lines[1].Trim();
-                    cabecalho[2] = lines[4].Trim().Replace(":", "");
-                    cabecalho[3] = lines[6].Trim().Replace(".", "").Replace("/", "").Replace("-", "");
-                    cabecalho[4] = "ENDERECO";
-                    cabecalho[5] = lines[7].Trim().ToUpper();
-                    cabecalho[6] = lines[9].Replace("\t\t\t\t\t\t\t", "");
-                    cabecalho[7] = lines[13].Replace("\t\t\t\t\t\t\t", "").ToUpper();
-                    cabecalho[8] = lines[15].Replace("\t\t\t\t\t\t\t", "");
-                    cabecalho[9] = lines[17].Replace("\t\t\t\t\t\t\t", "");
+                    Estabelecimento estabelecimento = new Estabelecimento(lines[1].Trim(), lines[7].Trim().ToUpper(), lines[13].Replace("\t\t\t\t\t\t\t", "").ToUpper(), lines[15].Replace("\t\t\t\t\t\t\t", "").ToUpper(), lines[17].Replace("\t\t\t\t\t\t\t", "").ToUpper(), lines[6].Trim().Replace(".", "").Replace("/", "").Replace("-", ""));
 
-                    var json1 = JsonConvert.SerializeObject(cabecalho);
+                    var cabecalho = JsonConvert.SerializeObject(estabelecimento);
 
-                    Console.WriteLine(json1);
+                    Console.WriteLine(cabecalho);
                 }
                 countDiv++;
             }
 
-            int size = 1;
-
-            foreach (HtmlNode table in doc.DocumentNode.SelectNodes("//table"))
-            {
-                
-                foreach (HtmlNode row in table.SelectNodes("tr"))
-                {
-                    ++size;                  
-                }
-            }
-            size--;
-
-            string[,] item = new string[size, 8];
-            int sizetr = 0;
+            List<Item> Itens = new List<Item>();
 
             foreach (HtmlNode table in doc.DocumentNode.SelectNodes("//table"))
             {
                 foreach (HtmlNode row in table.SelectNodes("tr"))
                 {
-                    int count = 0;                    
+                    int count = 0;
 
                     foreach (HtmlNode cell in row.SelectNodes("th|td"))
                     {
-
                         string value = cell.InnerText;
 
                         string[] lines = value.Split(new string[] { "\r\n", "\t\t\t\t\t\t\t\t\t\t", "\t\t\t\t\t\t\t\t\t", "          " }, StringSplitOptions.None);
 
                         if (count == 0)
                         {
-                            if (lines[2] != null)
-                            {
-                                item[sizetr, 0] = "DESCRICAO";
-                                item[sizetr, 1] = lines[2].ToUpper();
-                            }
-
-                            if (lines[6] != null)
-                                item[sizetr, 2] = lines[6].Replace("(", "").Replace("ó", "o").ToUpper();
-
-                            if (lines[8] != null)
-                                item[sizetr, 3] = lines[8];
-
-                            if (lines[22] != null)
-                            {
-                                item[sizetr, 4] = "UNIDADE";
-                                item[sizetr, 5] = lines[22].Substring(6, 2).ToUpper();
-                            }
-
-                            if (lines[30] != null)
-                            {
-                                item[sizetr, 6] = "VLUNIT";
-                                item[sizetr, 7] = lines[30].Replace(",", ".");
-                            }
-                            sizetr++;
+                            Itens.Add(new Item(lines[8], lines[2].ToUpper(), lines[22].Substring(6, 2).ToUpper(), lines[30].Replace(",", ".")));
                         }
-                        count++;                        
+                        count++;
                     }
                 }
             }
 
-            var conteudo = JsonConvert.SerializeObject(item);
+            var conteudo = JsonConvert.SerializeObject(Itens);
 
             Console.WriteLine(conteudo);
 
-            Console.Read();
- 
         }
     }
 }
